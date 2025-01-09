@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Clone</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        .netflix-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://assets.nflxext.com/ffe/siteui/vlv3/594f8025-139a-4a35-b58d-4ecf8fdc507c/d3c4e455-f0bf-4003-b7cd-511dda6da82a/IN-en-20240108-popsignuptwoweeks-perspective_alpha_website_large.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Loading Container */
+        .loading-container {
+            position: relative;
+            left: 550px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-self: center;
+            justify-self: center;
+            justify-content: center;
+            color: #EAEAEA;
+        }
+
+        /* Dots Wrapper */
+        .dots {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* Individual Dot */
+        .dots span {
+            width: 12px;
+            height: 12px;
+            background-color: red;
+            /* Bright purple for Movieverse theme */
+            border-radius: 50%;
+            animation: pulse 1.5s infinite ease-in-out;
+        }
+
+        /* Animating Each Dot */
+        .dots span:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* Loading Text */
+        .loading-text {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            /* Light purple for Movieverse theme */
+        }
+
+        /* Pulse Animation */
+        @keyframes pulse {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white">
+    <div class="min-h-screen">
+
+        <div class="netflix-bg h-screen">
+            <!-- Header -->
+            <header class="px-4 py-5 flex items-center justify-between max-w-[1170px] mx-auto">
+                <h1 class="text-2xl sm:text-4xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">
+                    <span class="text-[#e50914] ">MOVIE</span><span class="text-white">VERSE</span>
+                </h1>
+
+                <div class="flex items-center max-sm:gap-2 gap-4">
+                    <div class="relative">
+                        <select
+                            class="bg-black/20 max-sm:hidden text-white border border-white/30 rounded px-4 max-sm:px-2 py-1 appearance-none pr-8 text-sm sm:text-base">
+                            <option>English</option>
+                        </select>
+                        <span class="absolute right-2 top-1/2 -translate-y-1/2">🌐</span>
+                    </div>
+                    <button class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
+                        Sign In
+                    </button>
+                </div>
+            </header>
+
+            <!-- Hero Section -->
+            <main class="max-w-[1170px] mx-auto px-4 text-center mt-16 sm:mt-24 lg:mt-32 py-6">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-5">
+                    Unlimited movies,<br />
+                    TV shows and more
+                </h1>
+                <p class="text-lg sm:text-xl lg:text-2xl mb-5">Browse the movie with personalised recommendation.</p>
+                <p class="text-base sm:text-lg lg:text-xl mb-5">Ready to watch? Enter your favorite movie name and watch
+                    it.</p>
+
+                <form id="searchForm" class="max-w-[700px] mx-auto flex flex-col sm:flex-row gap-3">
+                    <div class="flex-1">
+                        <input type="text" id="searchBar" placeholder="Search for movies"
+                            class="w-full px-4 py-3 sm:py-4 rounded bg-black/40 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-white text-sm sm:text-base">
+                    </div>
+                    <button type="submit" id="searchButton"
+                        class="bg-[#e50914] text-white px-6 py-3 sm:px-8 sm:py-4 rounded text-lg sm:text-xl font-medium flex items-center justify-center whitespace-nowrap">
+                        Search
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </form>
+            </main>
+        </div>
+
+        <!-- Divider -->
+        <div class="w-full block bg-white h-2 opacity-30 "></div>
+
+        <!-- Top Movies -->
+        <section class="px-4 py-8">
+            <div class="max-w-[1170px] mx-auto">
+                <!-- Header and Filters -->
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold mb-4">Trending Now</h2>
+                    <div class="flex gap-3">
+                        <div class="relative inline-block">
+                            <select
+                                class="appearance-none bg-transparent border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/10 focus:outline-none focus:border-white">
+                                <option>India</option>
+                            </select>
+                            <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        <div class="relative inline-block">
+                            <select
+                                class="appearance-none bg-transparent border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/10 focus:outline-none focus:border-white">
+                                <option>Movies</option>
+                            </select>
+                            <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Slider -->
+                <div class="relative">
+                    <!-- Scrollable Container -->
+                    <div class="flex gap-6 overflow-x-auto top-movies here  pb-8 scrollbar-hide">
+
+                        <!-- COPY FROM HERE - Single Movie Card Template -->
+                        <div
+                            class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
+                            <img src="https://images-cdn.ubuy.co.in/633feb99b0c4240a6e30e463-poster-stop-online-avengers-endgame.jpg"
+                                alt="Movie Title"
+                                class="w-full h-[200px] sm:h-[350px] rounded-xl object-cover transition-transform duration-300 group-hover:scale-105">
+                            <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-6xl font-bold opacity-80 backdrop-blur bg-shadow">1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- COPY UNTIL HERE - Paste 5 more times and update the number in span -->
+                    </div>
+
+                    <!-- Navigation Buttons - Only visible on desktop -->
+                    <!-- Navigation Buttons - Only visible on desktop -->
+
+                    <button
+                        class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors hidden md:block left-nav">
+                        <svg class="w-6 h-6 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <button
+                        class="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors hidden md:block right-nav">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Movies -->
+        <section class="px-4 py-8">
+            <div class="max-w-[1170px] mx-auto">
+                <!-- Header and Filters -->
+                <div class="mb-6">
+                    <h2 class="text-3xl font-bold mb-4">Featured Now</h2>
+                    <div class="flex gap-3">
+                        <div class="relative inline-block">
+                            <select
+                                class="appearance-none bg-transparent border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/10 focus:outline-none focus:border-white">
+                                <option>India</option>
+                            </select>
+                            <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        <div class="relative inline-block">
+                            <select
+                                class="appearance-none bg-transparent border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/10 focus:outline-none focus:border-white">
+                                <option>Movies</option>
+                            </select>
+                            <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Movie Slider -->
+                <div class="relative">
+                    <!-- Scrollable Container -->
+                    <div class="flex gap-6 overflow-x-auto featured-movies here pb-8 scrollbar-hide">
+                        <!-- Dynamic Movies Card will be added here.... -->
+                    </div>
+
+                    <!-- Navigation Buttons - Only visible on desktop -->
+                    <button
+                        class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors hidden md:block left-nav">
+                        <svg class="w-6 h-6 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                    <button
+                        class="absolute right-0 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors hidden md:block right-nav">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                </div>
+            </div>
+        </section>
+
+
+    </div>
+
+    <script src="./scripts/main.js"></script>
+</body>
+
+</html>

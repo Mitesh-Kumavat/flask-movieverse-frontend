@@ -12,9 +12,12 @@
     <header class="p-4 bg-gray-800 flex justify-between items-center">
         <h1 class="text-2xl font-bold"><a href="/index.html">MovieVerse</a></h1>
         <div>
-            <input type="text" id="searchBar" placeholder="Search movie name"
-                class="px-4 py-2 rounded bg-gray-700 text-white">
-            <button id="searchButton" class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700">Search</button>
+            <form id="searchForm" class="flex items-center space-x-2">
+                <input type="text" id="searchBar" placeholder="Search movie name"
+                    class="px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="searchButton" type="submit"
+                    class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Search</button>
+            </form>
         </div>
     </header>
 
@@ -42,7 +45,7 @@
             </div>
         </section>
     </main>
-    <script src="movieDetail.js"></script>
+    <script type="module" src="./scripts/movieDetail.js"></script>
 </body>
 
 </html>
