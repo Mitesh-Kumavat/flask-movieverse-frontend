@@ -13,7 +13,7 @@ async function fetchData(endpoint) {
 
 async function fetchMovieImage(imdbId) {
   const OMDB_API_KEY = '1e64c9b4';
-  const url = `http://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`;
+  const url = `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`;
   const response = await fetch(url);
   if (response.ok) {
     const data = await response.json();
