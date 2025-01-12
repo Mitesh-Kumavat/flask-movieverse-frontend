@@ -154,10 +154,79 @@
                     <h2 class="text-3xl font-bold mb-4">Trending Now</h2>
                     <div class="flex gap-3">
                         <div class="relative inline-block">
-                            <select
-                                class="appearance-none bg-transparent border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/10 focus:outline-none focus:border-white">
-                                <option>India</option>
-                            </select>
+                            <!-- Filter Section -->
+                            <div class="flex gap-3">
+                                <!-- Genre Filter -->
+                                <div class="relative inline-block">
+                                    <select id="genreFilter"
+                                        class="font-semibold appearance-none text-black bg-white/50 border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/40 focus:outline-none focus:border-white">
+                                        <option value="">Select Genre</option>
+                                        <option value="action">Action</option>
+                                        <option value="comedy">Comedy</option>
+                                        <option value="drama">Drama</option>
+                                        <option value="thriller">Thriller</option>
+                                        <!-- Add more genres as needed -->
+                                    </select>
+                                    <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+
+                                <!-- Language Filter -->
+                                <div class="relative inline-block">
+                                    <select id="languageFilter"
+                                        class="font-semibold appearance-none text-black bg-white/50 border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/40 focus:outline-none focus:border-white">
+                                        <option value="">Select Language</option>
+                                        <option value="english">English</option>
+                                        <option value="hindi">Hindi</option>
+                                        <option value="spanish">Spanish</option>
+                                        <option value="french">French</option>
+                                        <!-- Add more languages as needed -->
+                                    </select>
+                                    <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+
+                                <!-- Rating Filter -->
+                                <div class="relative inline-block">
+                                    <select id="ratingFilter"
+                                        class="font-semibold appearance-none text-black bg-white/50 border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/40 focus:outline-none focus:border-white"">
+                                        <option value="">Min Rating</option>
+                                        <option value=" 7.5">7.5+</option>
+                                        <option value="8">8+</option>
+                                        <option value="9">9+</option>
+                                        <!-- Add more ratings as needed -->
+                                    </select>
+                                    <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+
+                                <!-- Year Filter -->
+                                <div class="relative inline-block">
+                                    <select id="yearFilter"
+                                        class="font-semibold appearance-none text-black bg-white/50 border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/40 focus:outline-none focus:border-white">
+                                        <option value="">Select Year Range</option>
+                                        <option value="2000-2020">2000-2020</option>
+                                        <option value="2021-2025">2021-2025</option>
+                                        <!-- Add more year ranges as needed -->
+                                    </select>
+                                    <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
+                                        fill="none" stroke="" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </div>
+                            </div>
+
+
                             <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
                                 fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -166,7 +235,7 @@
                         </div>
                         <div class="relative inline-block">
                             <select
-                                class="appearance-none bg-transparent border border-white/30 rounded px-4 py-1 pr-8 text-sm hover:bg-white/10 focus:outline-none focus:border-white">
+                                class="appearance-none text-black bg-white/50 border border-white/30 rounded px-4 py-1 pr-8 text-sm font-semibold hover:bg-white/40 focus:outline-none focus:border-white">
                                 <option>Movies</option>
                             </select>
                             <svg class="w-4 h-4 absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none"
@@ -183,24 +252,10 @@
                     <!-- Scrollable Container -->
                     <div class="flex gap-6 overflow-x-auto top-movies here  pb-8 scrollbar-hide">
 
-                        <!-- COPY FROM HERE - Single Movie Card Template -->
-                        <div
-                            class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
-                            <img src="https://images-cdn.ubuy.co.in/633feb99b0c4240a6e30e463-poster-stop-online-avengers-endgame.jpg"
-                                alt="Movie Title"
-                                class="w-full h-[200px] sm:h-[350px] rounded-xl object-cover transition-transform duration-300 group-hover:scale-105">
-                            <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-6xl font-bold opacity-80 backdrop-blur bg-shadow">1</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- COPY UNTIL HERE - Paste 5 more times and update the number in span -->
+                        <!-- MOVIE CARD WILL COME HERE -->
                     </div>
 
                     <!-- Navigation Buttons - Only visible on desktop -->
-                    <!-- Navigation Buttons - Only visible on desktop -->
-
                     <button
                         class="absolute left-0 top-1/2 -translate-y-1/2 bg-black/50 p-2 rounded-full hover:bg-black/80 transition-colors hidden md:block left-nav">
                         <svg class="w-6 h-6 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">

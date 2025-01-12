@@ -4,48 +4,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movie Detail</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Avengers: Infinity War | MovieVerse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+    </style>
+
 </head>
 
-<body class="bg-gray-900 text-white">
-    <header class="p-4 bg-gray-800 flex justify-between items-center">
-        <h1 class="text-2xl font-bold"><a href="/index.html">MovieVerse</a></h1>
-        <div>
-            <form id="searchForm" class="flex items-center space-x-2">
-                <input type="text" id="searchBar" placeholder="Search movie name"
-                    class="px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="searchButton" type="submit"
-                    class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Search</button>
-            </form>
-        </div>
-    </header>
+<body class="bg-black text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
+        <div class="max-w-[1170px] mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <h1 class="text-4xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">
+                    <a href="/">
+                        <span class="text-[#e50914]">MOVIE</span><span class="text-white">VERSE</span>
+                    </a>
+                </h1>
+            </div>
 
-    <main class="p-6">
-        <section id="movieDetails" class="mb-8">
-            <div class="flex gap-6">
-                <img id="moviePoster" src="" alt="Movie Poster" class="w-48 h-72 bg-gray-700">
-                <div>
-                    <h2 id="movieTitle" class="text-2xl font-bold mb-2">Movie Title</h2>
-                    <p id="movieYear" class="mb-4">Release Year</p>
-                    <p id="movieRuntime" class="mb-4">Runtime: -- hours</p>
-                    <p id="movieLanguage" class="mb-4">Language: --</p>
-                    <p id="movieGenre" class="mb-4">Genre: --</p>
-                    <p id="movieDirector" class="mb-4">Director: --</p>
-                    <p id="movieActor" class="mb-4">Main Actor: --</p>
-                    <p id="movieDescription" class="mb-4">Description of the movie</p>
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <input type="search" placeholder="Search"
+                        class="bg-black/20 border border-white/30 rounded px-4 py-1 text-sm placeholder-gray-400 focus:outline-none focus:border-white w-32 md:w-auto">
                 </div>
             </div>
-        </section>
+        </div>
+    </nav>
 
-        <section id="similarMovies">
-            <h2 class="text-xl font-semibold mb-4">Recommended Movies</h2>
-            <div class="grid grid-cols-5 gap-4">
-                <!-- Similar movie cards will be dynamically inserted here -->
+    <!-- Main Content -->
+    <main class="pt-16">
+        <!-- Hero Section -->
+        <div class="relative">
+            <div class="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-10"></div>
+            <div class="container mx-auto px-4 flex flex-col md:flex-row gap-8 relative z-20 py-8">
+
+                <!-- Movie Poster -->
+                <div class="w-min-content flex justify-center items-center poster-here">
+                    <!-- Dynamic image come here of the poster -->
+                </div>
+
+                <!-- Movie Details -->
+                <div class="w-full md:w-[60%] lg:w-[65%] space-y-6 ">
+                    <div class="movie-main-content-header">
+                        <!-- movie-main-content header here -->
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="border-b border-gray-800">
+                        <div class="flex gap-8">
+                            <button id="overviewTab" class="px-1 py-2 text-sm font-medium">OVERVIEW</button>
+                            <button id="trailerTab" class="px-1 py-2 text-sm font-medium">TRAILERS &
+                                MORE</button>
+                        </div>
+                    </div>
+
+                    <!-- Overview Tab Content -->
+                    <div id="overview" class="hidden space-y-4 overview-content">
+                        <!-- Content will come here by JS -->
+                    </div>
+
+                    <!-- Trailer Tab Content -->
+                    <div id="trailer">
+                        <section class="flex justify-center items-center w-full trailer-here">
+
+                        </section>
+                    </div>
+
+                    <!-- Related Movies -->
+                    <div class="relative mt-6">
+                        <h1 class="text-3xl font-semibold my-6">Realted Movies</h1>
+                        <!-- Scrollable Container -->
+                        <div class="flex gap-6 overflow-x-auto realted-movies  pb-8 scrollbar-hide ">
+                            <!-- Movies Card here -->
+                        </div>
+
+
+                    </div>
+                </div>
+
             </div>
-        </section>
+        </div>
     </main>
-    <script type="module" src="./scripts/movieDetail.js"></script>
+
+    <script src="./scripts/movieDetail.js"></script>
 </body>
 
 </html>
