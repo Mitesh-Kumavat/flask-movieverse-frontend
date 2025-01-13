@@ -19,7 +19,7 @@
             display: none;
         }
 
-        .scrollbar-hide {
+        * {
             -ms-overflow-style: none;
             /* IE and Edge */
             scrollbar-width: none;
@@ -37,58 +37,6 @@
             justify-self: center;
             justify-content: center;
             color: #EAEAEA;
-        }
-
-        /* Dots Wrapper */
-        .dots {
-            display: flex;
-            gap: 8px;
-        }
-
-        /* Individual Dot */
-        .dots span {
-            width: 12px;
-            height: 12px;
-            background-color: red;
-            /* Bright purple for Movieverse theme */
-            border-radius: 50%;
-            animation: pulse 1.5s infinite ease-in-out;
-        }
-
-        /* Animating Each Dot */
-        .dots span:nth-child(1) {
-            animation-delay: 0s;
-        }
-
-        .dots span:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-
-        .dots span:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        /* Loading Text */
-        .loading-text {
-            margin-top: 15px;
-            font-size: 16px;
-            font-weight: 500;
-            color: white;
-            /* Light purple for Movieverse theme */
-        }
-
-        /* Pulse Animation */
-        @keyframes pulse {
-
-            0%,
-            80%,
-            100% {
-                transform: scale(0);
-            }
-
-            40% {
-                transform: scale(1);
-            }
         }
     </style>
 </head>
