@@ -4,36 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MovieVerse - Search Results</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Search Results | MovieVerse</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 
-<body class="bg-gray-900 text-white">
-    <!-- Navbar -->
-    <header class="p-4 bg-gray-800 flex justify-between items-center">
-        <h1 class="text-2xl font-bold"><a href="/">MovieVerse</a></h1>
-        <div class="flex items-center space-x-4">
-            <!-- Search Bar -->
-            <form id="searchForm" class="flex items-center space-x-2">
-                <input type="text" id="searchBar" placeholder="Search movie name"
-                    class="px-4 py-2 rounded bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <button id="searchButton" type="submit"
-                    class="px-4 py-2 bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">Search</button>
-            </form>
-        </div>
-    </header>
-
-    <!-- Search Results Content -->
-    <main class="p-6 bg-gray-900">
-        <section id="searchResults" class="mb-8 px-4">
-            <h2 class="text-2xl font-bold text-gray-100 mb-6">Search Results</h2>
-            <div class="flex flex-wrap justify-center mt-2 here">
-                <!-- Dynamic search results will be inserted here -->
+<body class="bg-black text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 bg-gradient-to-b from-black/80 to-transparent backdrop-blur-sm">
+        <div class="max-w-[1170px] mx-auto px-4 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <a href="/">
+                    <h1 class="text-4xl font-bold" style="font-family: 'Bebas Neue', sans-serif;">
+                        <span class="text-[#e50914]">MOVIE</span><span class="text-white">VERSE</span>
+                    </h1>
+                </a>
             </div>
-        </section>
+
+            <div class="flex items-center gap-4">
+                <form id="searchForm" class="relative">
+                    <input type="search" id="searchBar" placeholder="Search"
+                        class="bg-black/20 border border-white/30 rounded px-4 py-1 text-sm placeholder-gray-400 focus:outline-none focus:border-white w-32 md:w-auto">
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-24 pb-12 max-w-[1170px] mx-auto">
+        <h2 class="text-3xl font-bold mb-6 ml-4">Search Results for "<span id="searchQuery">
+                <!-- search query will come here -->
+            </span>"</h2>
+
+        <!-- Search Results -->
+        <div id="searchResults" class="flex justify-center gap-10 items-center flex-wrap">
+
+        </div>
     </main>
 
-    <!-- JavaScript -->
     <script src="./scripts/search.js"></script>
 </body>
 

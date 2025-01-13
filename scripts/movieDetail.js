@@ -94,7 +94,6 @@ async function fetchMovieData(movieId) {
   <img src="${img_src}" alt="${data.original_title}" class="w-auto h-[380px] sm:h-[500px] rounded-lg shadow-xl">
   `
 
-  // Example: Total minutes
   const hours = `${Math.floor(data.duration / 60)}h ${data.duration % 60}m`;
   document.querySelector(".movie-main-content-header").innerHTML = `
                         <div>
@@ -172,13 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// document.getElementById("searchForm").addEventListener("submit", function (e) {
-// e.preventDefault(); // Prevent form submission
-// const query = document.getElementById("searchBar").value.trim();
-// if (query) {
-// window.location.href = `/searchResult.html?search=${query}`;
-// }
-// });
+document.getElementById("searchForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const query = document.getElementById("searchBar").value.trim();
+  if (query) {
+    window.location.href = `/searchResult.html?search=${query}`;
+  }
+});
 
 const movieId = window.location.href.split("?id=")[1];
 
