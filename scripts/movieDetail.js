@@ -1,26 +1,5 @@
-// const API_BASE_URL = "http://127.0.0.1:5000";
-const API_BASE_URL = "https://flask-movieverse.onrender.com";
+import { fetchData, fetchMovieImage } from './util.js';
 
-async function fetchData(endpoint) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api${endpoint}`);
-    if (!response.ok) throw new Error("Failed to fetch data");
-    return await response.json();
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-}
-
-async function fetchMovieImage(imdbId) {
-  const OMDB_API_KEY = '1e64c9b4';
-  const url = `https://www.omdbapi.com/?i=${imdbId}&apikey=${OMDB_API_KEY}`;
-  const response = await fetch(url);
-  if (response.ok) {
-    const data = await response.json();
-    return data.Poster || '';
-  }
-  return '';
-}
 
 async function displaySimilarMovies(movieId) {
   const movies = await fetchData(`/movie/${movieId}/similar`);
@@ -36,7 +15,7 @@ async function displaySimilarMovies(movieId) {
   }));
 
   container.innerHTML = moviesWithImages.map((movie, index) =>
-    ` <div class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
+    ` <div class="relative transition-in transition-transform duration-300  overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
     <a href="/movieDetail.html?id=${movie.imdb_title_id}">
         <img src="${movie.img_src}" 
             alt="${movie.original_title}" 
@@ -51,36 +30,6 @@ async function displaySimilarMovies(movieId) {
 
 }
 
-async function searchMovies(query) {
-  const movies = await fetchData(`/movie/search?search=${query}`);
-  if (!movies || movies.length === 0) {
-    console.error("No movies found.");
-    return;
-  }
-
-  const container = document.querySelector("#searchResults .grid");
-  container.innerHTML = movies.map((movie) =>
-    `
-    <div class="mx-3 sm:mx-6 max-sm:text-sm max-sm:font-normal text-lg font-medium p-2 transition-all duration-200 hover:scale-[1.2] max-sm:mx-auto max-sm:my-3 cursor-pointer md:mt-0 mb-8 bg-[#262626] border border-[#333333] rounded-xl">
-        <a href="/movieDetail.html?id=${movie.imdb_title_id}" class="block" style="max-width:195px; height: max-content;">
-          <img loading="lazy" class="h-72 w-[13rem] max-sm:h-[12rem] max-sm:w-[9rem] rounded-lg" src="${movie.img_src}" alt="${movie.original_title}" />
-          <h1 class="text-start mt-3 max-w-48 max-sm:max-w-32 overflow-x-hidden text-[#EAEAEA]">
-            <span class="text-[#EAEAEA] font-bold">Name: </span>${movie.original_title}
-          </h1>
-          <h1 class="text-[#EAEAEA]">
-            <span class="text-[#EAEAEA] font-bold">Rating: </span>
-            <span class="items-center">
-              <span class="text-white">${movie.avg_vote}/10</span>
-              <span class="ml-2 text-yellow-400">★</span>
-            </span>
-          </h1>
-          <h1 class="text-[#EAEAEA]">
-            <span class="text-[#EAEAEA] font-bold">Year: </span>${movie.year}
-          </h1>
-        </a>
-    </div>
-    `).join("");
-}
 
 async function fetchMovieData(movieId) {
   const data = await fetchData(`/movie/${movieId}`);
