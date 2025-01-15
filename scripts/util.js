@@ -42,3 +42,73 @@ export async function movieCard(container, movies) {
         </div>`).join("");
 
 }
+
+export function loadingMovieCard(container) {
+    const skeletonCards = Array.from({ length: 5 }).map(() => `
+        <div class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
+            <div class="w-full h-[315px] sm:h-[350px] bg-gray-700 rounded-xl animate-pulse"></div>
+            <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-gray">
+                <div class="flex items-center gap-2">
+                   
+                </div>
+            </div>
+        </div>
+    `).join("");
+
+    container.innerHTML = skeletonCards;
+}
+
+export function loadingMovieDetail(container) {
+    container.innerHTML = `
+      <div class="animate-pulse">
+        <!-- Poster Section -->
+        <div class="poster-here w-auto h-[380px] sm:h-[500px] bg-gray-800 rounded-lg shadow-xl mb-8"></div>
+  
+        <!-- Header Section -->
+        <div class="movie-main-content-header space-y-4">
+          <div class="h-10 bg-gray-800 rounded w-3/4"></div>
+          <div class="flex items-center gap-4">
+            <span class="h-6 bg-gray-800 rounded w-16"></span>
+            <span class="h-6 bg-gray-800 rounded w-20"></span>
+            <span class="h-8 bg-gray-800 rounded w-24"></span>
+            <div class="flex items-center gap-2">
+              <span class="h-6 bg-gray-800 rounded w-12"></span>
+              <span class="h-6 bg-gray-700 rounded w-6"></span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Overview Section -->
+        <div class="overview-content space-y-6 mt-8">
+          <div class="h-6 bg-gray-800 rounded w-full"></div>
+          <div class="h-6 bg-gray-800 rounded w-3/4"></div>
+          <div class="space-y-4">
+            <div class="flex gap-8">
+              <span class="h-6 bg-gray-700 rounded w-24"></span>
+              <span class="h-6 bg-gray-800 rounded w-3/4"></span>
+            </div>
+            <div class="flex gap-8">
+              <span class="h-6 bg-gray-700 rounded w-24"></span>
+              <span class="h-6 bg-gray-800 rounded w-3/4"></span>
+            </div>
+            <div class="flex gap-8">
+              <span class="h-6 bg-gray-700 rounded w-24"></span>
+              <span class="h-6 bg-gray-800 rounded w-3/4"></span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Trailer Section -->
+        <div class="trailer-here w-[400px] md:w-[550px] h-[200px] md:h-[340px] bg-gray-800 rounded-lg mt-8"></div>
+  
+        <!-- Similar Movies Section -->
+        <div class="realted-movies flex gap-4 mt-8">
+          ${Array.from({ length: 10 }).map(() => `
+            <div class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px]">
+              <div class="w-full h-[315px] sm:h-[350px] bg-gray-800 rounded-xl animate-pulse"></div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    `;
+}

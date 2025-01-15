@@ -1,4 +1,4 @@
-import { API_BASE_URL, movieCard } from './util.js';
+import { API_BASE_URL, loadingMovieCard, movieCard } from './util.js';
 
 async function fetchSearchResults(query) {
     try {
@@ -12,11 +12,15 @@ async function fetchSearchResults(query) {
 
 async function displaySearchResults() {
 
+    const container = document.querySelector("#searchResults");
+
     const query = new URLSearchParams(window.location.search).get('search');
     if (!query) {
         console.error("No search query provided.");
         return;
     }
+
+    loadingMovieCard(container)
 
     document.getElementById("searchQuery").innerHTML = query.trim();
 
@@ -25,7 +29,6 @@ async function displaySearchResults() {
         document.getElementById("searchResults").innerHTML = `<h2 class="text-3xl text-center mt-32 mx-4  ">No results found for "<strong >${query}</strong>".</h2>`;
         return;
     }
-    const container = document.querySelector("#searchResults");
 
     movieCard(container, movies)
 }

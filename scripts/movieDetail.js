@@ -1,16 +1,15 @@
-import { fetchData, fetchMovieImage, movieCard } from './util.js';
+import { fetchData, fetchMovieImage, loadingMovieCard, movieCard, loadingMovieDetail } from './util.js';
 
 
 async function displaySimilarMovies(movieId) {
+  const container = document.querySelector(".realted-movies");
+  loadingMovieCard(container)
   const movies = await fetchData(`/movie/${movieId}/similar`);
   if (!movies || movies.length === 0) {
     console.error("No similar movies found.");
     return;
   }
-  const container = document.querySelector(".realted-movies");
-
   movieCard(container, movies)
-
 }
 
 
@@ -27,6 +26,7 @@ async function fetchMovieData(movieId) {
   `
 
   const hours = `${Math.floor(data.duration / 60)}h ${data.duration % 60}m`;
+
   document.querySelector(".movie-main-content-header").innerHTML = `
                         <div>
                         <h1 class="text-4xl md:text-5xl font-bold mb-4">${data.original_title}</h1>

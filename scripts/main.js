@@ -1,10 +1,9 @@
-import { API_BASE_URL, fetchData, movieCard } from './util.js';
+import { API_BASE_URL, fetchData, movieCard, loadingMovieCard } from './util.js';
 
 async function displayTopMovies() {
     try {
         const container = document.querySelector(".top-movies");
-        container.innerHTML = `<p class="text-center font-bold text-2xl w-full mt-6">Loading...</p>`;
-
+        loadingMovieCard(container)
         const movies = await fetchData("/top-movies");
 
         movieCard(container, movies)
@@ -16,11 +15,9 @@ async function displayTopMovies() {
 async function displayFeaturedMovies() {
     try {
         const container = document.querySelector(".featured-movies");
-        container.innerHTML = `<p class="text-center font-bold text-2xl w-full mt-6">Loading...</p>`;
-
+        loadingMovieCard(container)
         const movies = await fetchData("/featured-movies");
-
-        movieCard(container, movies)
+        await movieCard(container, movies)
     } catch (error) {
         console.error("Error fetching featured movies:", error);
     }
@@ -99,8 +96,10 @@ document.addEventListener("DOMContentLoaded", function () {
         fetchMovies();
     });
 
+    const container = document.querySelector(".top-movies");
+
     function fetchMovies() {
-        console.log("fetching movies");
+        loadingMovieCard(container)
         const url = buildFilterUrl();
         fetch(url)
             .then(response => response.json())
@@ -116,7 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function updateMovieCards(movies) {
-        const container = document.querySelector(".top-movies");
         movieCard(container, movies)
     }
 });
