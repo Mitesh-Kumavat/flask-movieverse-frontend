@@ -1,4 +1,4 @@
-import { API_BASE_URL, fetchMovieImage, fetchData } from './util.js';
+import { API_BASE_URL, fetchData, movieCard } from './util.js';
 
 async function displayTopMovies() {
     try {
@@ -7,25 +7,7 @@ async function displayTopMovies() {
 
         const movies = await fetchData("/top-movies");
 
-        // Fetch movie images for each movie
-        const moviesWithImages = await Promise.all(movies.map(async (movie) => {
-            const imageSrc = await fetchMovieImage(movie.imdb_title_id);
-            return { ...movie, img_src: imageSrc };
-        }));
-
-        container.innerHTML = moviesWithImages.map((movie, index) =>
-            ` <div class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
-        <a href="/movieDetail.html?id=${movie.imdb_title_id}">
-                <img src="${movie.img_src}" 
-                    alt="${movie.original_title}" 
-                    class="w-full h-[315px] sm:h-[350px] rounded-xl object-cover transition-transform duration-300 group-hover:scale-105">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
-                        <div class="flex items-center gap-2">
-                            <span class="text-6xl font-bold opacity-80 backdrop bg-shadow">${index + 1}</span>
-                        </div>
-                    </div>
-                    </a>
-            </div>`).join("");
+        movieCard(container, movies)
     } catch (error) {
         console.error("Error fetching top movies:", error);
     }
@@ -38,25 +20,7 @@ async function displayFeaturedMovies() {
 
         const movies = await fetchData("/featured-movies");
 
-        // Fetch movie images for each movie
-        const moviesWithImages = await Promise.all(movies.map(async (movie) => {
-            const imageSrc = await fetchMovieImage(movie.imdb_title_id);
-            return { ...movie, img_src: imageSrc };
-        }));
-
-        container.innerHTML = moviesWithImages.map((movie, index) =>
-            ` <div class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
-                <a href="/movieDetail.html?id=${movie.imdb_title_id}">
-                    <img src="${movie.img_src}" 
-                        alt="${movie.original_title}" 
-                        class="w-full h-[315px] sm:h-[350px] rounded-xl object-cover transition-transform duration-300 group-hover:scale-105">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
-                        <div class="flex items-center gap-2">
-                            <span class="text-6xl font-bold opacity-80  bg-shadow">${index + 1}</span>
-                        </div>
-                    </div>
-                </a>
-            </div>`).join("");
+        movieCard(container, movies)
     } catch (error) {
         console.error("Error fetching featured movies:", error);
     }
@@ -153,25 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function updateMovieCards(movies) {
         const container = document.querySelector(".top-movies");
-        container.innerHTML = "";
-        const moviesWithImages = await Promise.all(movies.map(async (movie) => {
-            const imageSrc = await fetchMovieImage(movie.imdb_title_id);
-            return { ...movie, img_src: imageSrc };
-        }));
-
-        container.innerHTML = moviesWithImages.map((movie, index) =>
-            ` <div class="relative overflow-hidden rounded-xl flex-none w-[200px] sm:w-[260px] group cursor-pointer">
-        <a href="/movieDetail.html?id=${movie.imdb_title_id}">
-                <img src="${movie.img_src}" 
-                    alt="${movie.original_title}" 
-                    class="w-full h-[315px] sm:h-[350px] rounded-xl object-cover transition-transform duration-300 group-hover:scale-105">
-                    <div class="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-black to-transparent">
-                        <div class="flex items-center gap-2">
-                            <span class="text-6xl font-bold opacity-80  bg-shadow">${index + 1}</span>
-                        </div>
-                    </div>
-                    </a>
-            </div>`).join("");
+        movieCard(container, movies)
     }
 });
 
