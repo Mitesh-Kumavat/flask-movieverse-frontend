@@ -1,6 +1,6 @@
 
-// export const API_BASE_URL = "https://flask-movieverse.onrender.com";
-export const API_BASE_URL = "http://127.0.0.1:5000";
+export const API_BASE_URL = "https://flask-movieverse.onrender.com";
+// export const API_BASE_URL = "http://127.0.0.1:5000";
 
 export async function fetchMovieImage(imdbId) {
   const OMDB_API_KEY = '1e64c9b4';
