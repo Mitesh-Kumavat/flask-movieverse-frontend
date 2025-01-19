@@ -119,5 +119,29 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+const userId = localStorage.getItem("userId");
+const authButtonsContainer = document.getElementById("authButtons");
+if (userId) {
+    authButtonsContainer.innerHTML = `
+        <button id="logoutButton" class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
+            Log Out
+        </button>
+    `;
+
+    document.getElementById("logoutButton").addEventListener("click", () => {
+        localStorage.removeItem("userId");
+        window.location.href = "/";
+    });
+} else {
+    authButtonsContainer.innerHTML = `
+        <button class="bg-black/20 text-white border border-white/30 rounded px-4 max-sm:px-2 py-1 text-sm sm:text-base">
+            <a href="./signup/index.html">Sign up</a>
+        </button>
+        <button class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
+            <a href="./login/index.html">Log In</a>
+        </button>
+    `;
+}
+
 displayTopMovies();
 displayFeaturedMovies();
