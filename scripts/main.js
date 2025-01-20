@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     rightButtons.forEach((rightButton, index) => {
         rightButton.addEventListener('click', () => {
-            const slider = sliders[index]; // Match the slider to the button
+            const slider = sliders[index];
             if (slider) {
                 slider.scrollBy({
                     left: 300,
@@ -126,7 +126,12 @@ if (userId) {
         <button id="logoutButton" class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
             Log Out
         </button>
-    `;
+        <button id="logoutButton" class="bg-white/30 text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
+            <a href="/profile/index.html">
+                Profile
+            </a>
+        </button>
+`;
 
     document.getElementById("logoutButton").addEventListener("click", () => {
         localStorage.removeItem("userId");

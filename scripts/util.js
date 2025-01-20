@@ -1,5 +1,5 @@
-export const API_BASE_URL = "https://flask-movieverse.onrender.com";
-// export const API_BASE_URL = "http://127.0.0.1:5000";
+// export const API_BASE_URL = "https://flask-movieverse.onrender.com";
+export const API_BASE_URL = "http://127.0.0.1:5000";
 
 export async function fetchData(endpoint) {
   const response = await fetch(`${API_BASE_URL}/api${endpoint}`);
@@ -90,7 +90,7 @@ export function renderOverviewContent(data) {
 
 export function renderTrailer(trailerLink) {
   document.querySelector(".trailer-here").innerHTML = `
-    <iframe class="h-[200px] md:h-[340px] md:w-[550px] w-[400px]" src="${trailerLink}" frameborder="0"></iframe>
+    <iframe allowfullscreen class="h-[200px] md:h-[340px] md:w-[550px] w-[400px]" src="${trailerLink}" allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture"  frameborder="0"></iframe>
   `;
 }
 
