@@ -1,6 +1,5 @@
 import {
   fetchData,
-  fetchMovieImage,
   loadingMovieCard,
   movieCard,
   renderPoster,
@@ -25,13 +24,12 @@ async function displaySimilarMovies(movieId) {
 
 async function fetchMovieData(movieId) {
   const data = await fetchData(`/movie/${movieId}`);
-  const img_src = await fetchMovieImage(movieId);
   if (!data) {
     console.error("No movie data found.");
     return;
   }
 
-  renderPoster(img_src, data.original_title);
+  renderPoster(data.img, data.original_title);
   renderMovieHeader(data);
   renderOverviewContent(data);
   renderTrailer(data.trailer_link);
@@ -42,15 +40,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const trailerTab = document.querySelector("#trailerTab");
   const overviewContent = document.querySelector("#overview");
   const trailerContent = document.querySelector("#trailer");
-
-  // Initially display the overview content and hide the trailer content
   overviewContent.classList.remove("hidden");
   trailerContent.classList.add("hidden");
   overviewTab.classList.add("border-b-2", "border-red-600", "text-white");
   trailerTab.classList.add("text-gray-400");
   trailerTab.classList.remove("border-red-600", "border-b-2", "text-white");
 
-  // Event listener for the Overview tab
   overviewTab.addEventListener("click", () => {
     overviewContent.classList.remove("hidden");
     trailerContent.classList.add("hidden");
@@ -80,7 +75,7 @@ document.getElementById("searchForm").addEventListener("submit", function (e) {
 
 const movieId = window.location.href.split("?id=")[1];
 
-// Render the skeleton UI
+
 renderPosterSkeleton();
 renderMovieHeaderSkeleton();
 renderOverviewContentSkeleton();
