@@ -133,3 +133,84 @@ export function renderOverviewContentSkeleton() {
     </div>
   `;
 }
+
+
+export async function fetchSearchResults(url, query) {
+  try {
+    const response = await fetch(`${url}?search=${query}`);
+    if (!response.ok) throw new Error('Failed to fetch data');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    return [];
+  }
+}
+
+export function renderSuggestions(modal, movies, query) {
+  if (movies.length === 0) {
+    modal.innerHTML = `<p class="text-gray-400 text-center py-3">No results found</p>`;
+    modal.classList.remove('hidden');
+    return;
+  }
+
+  const suggestionsHTML = movies
+    .slice(0, 5)
+    .map((movie) => `
+        <div class="flex items-center gap-3 p-2 hover:bg-zinc-900 cursor-pointer ">
+           <a href="/movieDetail.html?id=${movie.imdb_title_id}" class="flex items-center w-full gap-3">
+            <img src="${movie.img}" alt="${movie.original_title}" class="w-12 h-16 object-cover rounded" />
+            <div class="flex flex-col w-full">
+                <div class="flex justify-between w-full">
+                    <p class="text-white font-medium">${movie.original_title}</p>
+                    <p class="text-gray-400 text-sm">${movie.year}</p>
+                </div>
+                <div class="flex justify-between w-full">
+                    <p class="text-gray-400 font-medium">${movie.genre}</p>
+                </div>
+            </div>
+           </a>
+        </div>`)
+    .join('');
+
+  const showAllButton = movies.length > 5
+    ? `<div class="p-4 pt-1">
+     <button class="w-full rounded-xl py-3 bg-red-600 text-center font-medium  text-white transition duration-200 hover:bg-red-700 " onclick="window.location.href='/searchResult.html?search=${query}'"> View All Results </button></div>`
+    : '';
+
+  modal.innerHTML = suggestionsHTML + showAllButton;
+  modal.classList.remove('hidden');
+}
+
+export function setupSearch({ searchBar, suggestionsModal, searchEndpoint, resultPageUrl }) {
+  let debounceTimeout;
+
+  searchBar.addEventListener('input', (event) => {
+    const query = event.target.value.trim();
+    if (!query) {
+      suggestionsModal.classList.add('hidden');
+      return;
+    }
+
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(async () => {
+      const movies = await fetchSearchResults(searchEndpoint, query);
+
+      if (movies.message === 'No movies found') {
+        suggestionsModal.innerHTML = `<p class="h-28 m-auto p-auto text-gray-400 text-center py-3"><span class="mt-22 inline-block p-8">No results found</span></p>`;
+        suggestionsModal.classList.remove('hidden');
+        suggestionsModal.classList.remove('rounded-br-2xl');
+        suggestionsModal.classList.remove('rounded-bl-2xl');
+        return;
+      }
+      renderSuggestions(suggestionsModal, movies, query);
+    }, 300);
+  });
+
+  document.querySelector('#searchForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const query = searchBar.value.trim();
+    if (query) {
+      window.location.href = `${resultPageUrl}?search=${query}`;
+    }
+  });
+}

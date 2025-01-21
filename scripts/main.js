@@ -1,4 +1,10 @@
-import { API_BASE_URL, fetchData, movieCard, loadingMovieCard } from './util.js';
+import { API_BASE_URL, fetchData, movieCard, loadingMovieCard, setupSearch } from './util.js';
+
+const searchBar = document.getElementById('searchBar');
+const suggestionsModal = document.getElementById('suggestionsModal');
+let debounceTimeout;
+const userId = localStorage.getItem("userId");
+const authButtonsContainer = document.getElementById("authButtons");
 
 async function displayTopMovies() {
     try {
@@ -23,15 +29,7 @@ async function displayFeaturedMovies() {
     }
 }
 
-document.getElementById("searchForm").addEventListener("submit", function (e) {
-    e.preventDefault();
-    const query = document.getElementById("searchBar").value.trim();
-    if (query) {
-        window.location.href = `/searchResult.html?search=${query}`;
-    }
-});
-
-// left-right buttons
+// Scroll left and right
 document.addEventListener('DOMContentLoaded', () => {
     const sliders = document.querySelectorAll('.overflow-x-auto');
     const leftButtons = document.querySelectorAll('.left-nav');
@@ -119,8 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-const userId = localStorage.getItem("userId");
-const authButtonsContainer = document.getElementById("authButtons");
+// Auth buttons
 if (userId) {
     authButtonsContainer.innerHTML = `
         <button id="logoutButton" class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
@@ -148,5 +145,21 @@ if (userId) {
     `;
 }
 
+document.querySelector('#searchForm').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const query = searchBar.value.trim();
+    if (query) {
+        window.location.href = `/ searchResult.html ? search = ${query} `;
+    }
+});
+
 displayTopMovies();
 displayFeaturedMovies();
+
+setupSearch({
+    searchBar: document.getElementById('searchBar'),
+    suggestionsModal: document.getElementById('suggestionsModal'),
+    searchEndpoint: `${API_BASE_URL}/api/movie/search`,
+    resultPageUrl: '/searchResult.html',
+});
+

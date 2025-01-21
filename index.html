@@ -9,6 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="./logo/movieverse.png">
     <style>
+        #suggestionsModal {
+            z-index: 1000;
+            max-height: max-content;
+            overflow-y: auto;
+        }
+
         .netflix-bg {
             background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                 url('https://assets.nflxext.com/ffe/siteui/vlv3/594f8025-139a-4a35-b58d-4ecf8fdc507c/d3c4e455-f0bf-4003-b7cd-511dda6da82a/IN-en-20240108-popsignuptwoweeks-perspective_alpha_website_large.jpg');
@@ -59,10 +65,15 @@
                 <p class="text-base sm:text-lg lg:text-xl mb-5">Ready to watch? Enter your favorite movie name and watch
                     it.</p>
 
-                <form id="searchForm" class="max-w-[700px] mx-auto flex flex-col sm:flex-row gap-3">
-                    <div class="flex-1">
-                        <input type="text" id="searchBar" placeholder="Search for movies"
-                            class="w-full px-4 py-3 sm:py-4 rounded bg-black/40 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-white text-sm sm:text-base">
+                <form id="searchForm" class=" max-w-[700px] mx-auto flex flex-col sm:flex-row gap-3 relative">
+                    <div class="flex-1 relative">
+                        <input type="text" id="searchBar" autocomplete="off" placeholder="Search for movies"
+                            class="w-full px-4 py-3 sm:py-4 rounded bg-black/40 border border-white/30 text-white placeholder-gray-400 focus:outline-none focus:border-white text-sm sm:text-base" />
+                        <div id="suggestionsModal"
+                            class=" absolute z-[999] top-full left-0 w-full bg-transparent/60 backdrop-blur border border-gray-700 rounded mt-1 hidden rounded-br-2xl rounded-bl-2xl ">
+                            <!-- Suggestions will be injected here -->
+                        </div>
+
                     </div>
                     <button type="submit" id="searchButton"
                         class="bg-[#e50914] text-white px-6 py-3 sm:px-8 sm:py-4 rounded text-lg sm:text-xl font-medium flex items-center justify-center whitespace-nowrap">

@@ -1,4 +1,4 @@
-import { API_BASE_URL, loadingMovieCard, movieCard } from './util.js';
+import { API_BASE_URL, loadingMovieCard, movieCard, setupSearch } from './util.js';
 
 async function fetchSearchResults(query) {
     try {
@@ -42,3 +42,9 @@ document.getElementById("searchForm").addEventListener("submit", function (e) {
 });
 
 displaySearchResults();
+setupSearch({
+    searchBar: document.getElementById('SearchBar'),
+    suggestionsModal: document.getElementById('SuggestionsModal'),
+    searchEndpoint: `${API_BASE_URL}/api/movie/search`,
+    resultPageUrl: '/searchResult.html',
+});

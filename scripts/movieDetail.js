@@ -8,7 +8,9 @@ import {
   renderTrailer,
   renderMovieHeaderSkeleton,
   renderPosterSkeleton,
-  renderOverviewContentSkeleton
+  renderOverviewContentSkeleton,
+  setupSearch,
+  API_BASE_URL
 } from './util.js';
 
 async function displaySimilarMovies(movieId) {
@@ -82,3 +84,10 @@ renderOverviewContentSkeleton();
 
 fetchMovieData(movieId);
 displaySimilarMovies(movieId);
+
+setupSearch({
+  searchBar: document.getElementById('SearchBar'),
+  suggestionsModal: document.getElementById('SuggestionsModal'),
+  searchEndpoint: `${API_BASE_URL}/api/movie/search`,
+  resultPageUrl: '/searchResult.html',
+});
