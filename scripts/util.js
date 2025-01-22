@@ -1,5 +1,6 @@
-export const API_BASE_URL = "https://flask-movieverse.onrender.com";
-// export const API_BASE_URL = "http://127.0.0.1:5000";
+// export const API_BASE_URL = "https://flask-movieverse.onrender.com";
+export const API_BASE_URL = "http://127.0.0.1:5000";
+export const userId = localStorage.getItem("userId")
 
 export async function fetchData(endpoint) {
   const response = await fetch(`${API_BASE_URL}/api${endpoint}`);
@@ -42,11 +43,31 @@ export function loadingMovieCard(container) {
   container.innerHTML = skeletonCards;
 }
 
-export function renderPoster(img_src, title) {
-  document.querySelector(".poster-here").innerHTML = `
-    <img src="${img_src}" alt="${title}" class="w-auto h-[380px] sm:h-[500px] rounded-lg shadow-xl">
-  `;
+export async function checkWatchList() {
+  const res = await fetch(`${API_BASE_URL}/api/user/${userId}/watchlist`)
+  const data = await res.json()
+  return data.map(movie => movie.movieImdbId)
 }
+
+
+export async function renderPoster(img_src, title, movieid) {
+  let isAddedInWatchList = false;
+
+  try {
+    const watchlistMoviesId = await checkWatchList();
+    if (watchlistMoviesId.includes(movieid)) isAddedInWatchList = true;
+  } catch (error) {
+    console.error("Error checking the watchlist:", error);
+  }
+
+  document.querySelector(".poster-here").innerHTML = ` <img src="${img_src}" alt="${title}" class="w-auto h-[380px] sm:h-[500px] rounded-lg shadow-xl">`;
+
+  document.querySelector(".watchlist-buttons").innerHTML = `${isAddedInWatchList ? removeButton : addButton}`;
+}
+
+const addButton = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>Add to watchlist`;
+
+const removeButton = `<svg height="20" fill="white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM184 232l144 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-144 0c-13.3 0-24-10.7-24-24s10.7-24 24-24z"/></svg>Remove from watchlist`;
 
 export function renderMovieHeader(data) {
   const hours = `${Math.floor(data.duration / 60)}h ${data.duration % 60}m`;
@@ -89,9 +110,15 @@ export function renderOverviewContent(data) {
 }
 
 export function renderTrailer(trailerLink) {
-  document.querySelector(".trailer-here").innerHTML = `
+  if (trailerLink) {
+    document.querySelector(".trailer-here").innerHTML = `
     <iframe allowfullscreen class="h-[200px] md:h-[340px] md:w-[550px] w-[400px]" src="${trailerLink}" allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture"  frameborder="0"></iframe>
-  `;
+    `;
+  } else {
+    document.querySelector(".trailer-here").innerHTML = `
+    <div class="w-full p-6 text-white text-3xl font-semibold">Youtube Trailer API Limit completed</div>
+    `;
+  }
 }
 
 export function renderPosterSkeleton() {

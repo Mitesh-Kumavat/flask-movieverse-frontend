@@ -10,7 +10,8 @@ import {
   renderPosterSkeleton,
   renderOverviewContentSkeleton,
   setupSearch,
-  API_BASE_URL
+  API_BASE_URL,
+  userId
 } from './util.js';
 
 async function displaySimilarMovies(movieId) {
@@ -24,6 +25,9 @@ async function displaySimilarMovies(movieId) {
   movieCard(container, movies);
 }
 
+let img;
+let title;
+
 async function fetchMovieData(movieId) {
   const data = await fetchData(`/movie/${movieId}`);
   if (!data) {
@@ -31,7 +35,9 @@ async function fetchMovieData(movieId) {
     return;
   }
 
-  renderPoster(data.img, data.original_title);
+  img = data.img;
+  title = data.original_title;
+  renderPoster(data.img, data.original_title, movieId);
   renderMovieHeader(data);
   renderOverviewContent(data);
   renderTrailer(data.trailer_link);
@@ -91,3 +97,30 @@ setupSearch({
   searchEndpoint: `${API_BASE_URL}/api/movie/search`,
   resultPageUrl: '/searchResult.html',
 });
+
+async function watchlistToggle(userId, movieId) {
+  const res = await fetch(`${API_BASE_URL}/api/user/${userId}/watchlist`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      movieId
+    }),
+  })
+  const data = await res.json();
+  console.log(data);
+
+  renderPoster(img, title, movieId);
+}
+
+
+let watchlistButton = document.getElementById('watchlistButton');
+if (watchlistButton) {
+  watchlistButton.addEventListener("click", () => {
+    console.log("Button Clicked");
+    watchlistToggle(userId, movieId);
+  });
+} else {
+  console.error("Watchlist button not found.");
+}
