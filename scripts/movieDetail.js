@@ -99,6 +99,12 @@ setupSearch({
 });
 
 async function watchlistToggle(userId, movieId) {
+  if (!userId) {
+    window.alert("Please login to add to watchlist.");
+    window.location.href = "login/index.html";
+    console.error("User not logged in.");
+    return;
+  }
   const res = await fetch(`${API_BASE_URL}/api/user/${userId}/watchlist`, {
     method: "POST",
     headers: {
