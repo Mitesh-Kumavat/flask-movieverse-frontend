@@ -1,7 +1,20 @@
 import { API_BASE_URL } from "../scripts/util.js";
 
 const signupForm = document.querySelector("form");
+const errorMessage = document.querySelector(".error-message");
 
+const showError = (message) => {
+    errorMessage.textContent = message;
+    errorMessage.classList.remove("hidden", "opacity-0");
+    errorMessage.classList.add("opacity-100");
+};
+
+const hideError = () => {
+    errorMessage.classList.add("opacity-0");
+    setTimeout(() => {
+        errorMessage.classList.add("hidden");
+    }, 300);
+};
 
 signupForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -12,39 +25,46 @@ signupForm.addEventListener("submit", async (event) => {
     const confirmPassword = signupForm.querySelector('#password2').value;
 
     if (!username || !email || !password || !confirmPassword) {
-        alert("Please fill in all fields.");
+        showError("Please fill in all fields.");
+        return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        showError("Please enter a valid email password.");
         return;
     }
 
     if (password !== confirmPassword) {
-        alert("Passwords do not match.");
+        showError("Passwords do not match.");
         return;
     }
+
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(password)) {
+        showError("Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.");
+        return;
+    }
+
+    hideError();
 
     try {
         const response = await fetch(`${API_BASE_URL}/api/register`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                username,
-                email,
-                password,
-            }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email, password }),
         });
 
         const result = await response.json();
-
 
         if (response.ok) {
             alert("Signup successful! You can now log in.");
             window.location.href = "/login";
         } else {
-            alert(result.error || "Signup failed. Please try again.");
+            showError(result.error || "Signup failed. Please try again.");
         }
     } catch (error) {
         console.error("Error during signup:", error);
-        alert("An error occurred. Please try again later.");
+        showError("An error occurred. Please try again later.");
     }
 });

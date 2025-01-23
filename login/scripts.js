@@ -34,7 +34,7 @@ loginForm.addEventListener("submit", async (event) => {
         if (response.ok) {
             alert("Login successful!");
             localStorage.setItem("userId", result.userId);
-            window.location.href = "/";
+            window.location.href = "/index.html";
         } else {
             alert(result.error || "Login failed. Please try again.");
         }

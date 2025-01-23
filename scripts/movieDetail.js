@@ -128,5 +128,5 @@ if (watchlistButton) {
     watchlistToggle(userId, movieId);
   });
 } else {
-  console.error("Watchlist button not found.");
+  console.log("Watchlist button not found.");
 }
