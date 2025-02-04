@@ -239,3 +239,20 @@ export function setupSearch({ searchBar, suggestionsModal, searchEndpoint, resul
     }
   });
 }
+
+export const showToast = (message, destination = null) => {
+  const toast = document.createElement("div");
+  toast.textContent = message;
+  toast.className = "fixed left-1/2 transform -translate-x-1/2 bottom-5 bg-gray-800/40 backdrop-blur-sm shadow-lg text-white px-6 py-3 rounded-lg shadow-lg text-sm font-medium transition-all opacity-100 min-w-max-content";
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add("opacity-0");
+    setTimeout(() => {
+      toast.remove();
+      if (destination !== null) {
+        window.location.href = destination;
+      }
+    }, 500);
+  }, 1500);
+};
