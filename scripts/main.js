@@ -121,11 +121,11 @@ if (userId) {
         <button id="logoutButton" class="bg-black/20 text-white border border-white/30 rounded px-4 max-sm:px-2 py-1 text-sm sm:text-base">
             Log Out
         </button>
-        <button id="logoutButton" class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
-            <a href="/profile/index.html">
+        <a href="/profile/index.html">
+            <button id="logoutButton" class="bg-[#e50914] text-white px-4 py-1 rounded font-medium text-sm sm:text-base">
                 Profile
-            </a>
-        </button>
+            </button>
+        </a>
 `;
 
     document.getElementById("logoutButton").addEventListener("click", () => {
